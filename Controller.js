@@ -2,15 +2,24 @@ var Controller = function (model, view) {
     this.model = model;
     this.view = view;
     this.init();
+    window.addEventListener('hashchange', this.router.bind(this))
 }
 Controller.prototype = {
     init: function () {
-        this.writeHandler();
+        // router만 있으면 init 지우고 router만 있어도 되지 않을려나?
+        this.router();
+    },
+    router : function(){
+        if(!location.hash || location.hash === '#list'){
+            this.listHandler();
+        }else if(location.hash === '#write'){
+            this.writeHandler();
+        }
     },
     writeHandler: function () {
         this.view.writeRender();
-        this.view.container.querySelector('#write').addEventListener('click', this.validator.bind(this));
-        this.view.container.querySelector('#list').addEventListener('click', this.listHandler.bind(this));
+        // this.view.container.querySelector('#write').addEventListener('click', this.validator.bind(this));
+        // this.view.container.querySelector('#list').addEventListener('click', this.listHandler.bind(this));
     },
     validator: function (e) {
         e.preventDefault();
@@ -62,12 +71,12 @@ Controller.prototype = {
         // 리스트만들기
         this.view.createItem(this.model.data);
         // 이벤트부여
-        var detailButton = this.view.container.querySelectorAll('a');
-        var writeButton = this.view.container.querySelector('button');
-        for (var i = 0; i < detailButton.length; i++) {
-            detailButton[i].addEventListener('click', this.detailHandler.bind(this));
-        }
-        writeButton.addEventListener('click', this.writeHandler.bind(this));
+        // var detailButton = this.view.container.querySelectorAll('a');
+        // var writeButton = this.view.container.querySelector('button');
+        // for (var i = 0; i < detailButton.length; i++) {
+        //     detailButton[i].addEventListener('click', this.detailHandler.bind(this));
+        // }
+        // writeButton.addEventListener('click', this.writeHandler.bind(this));
     },
     detailHandler: function (e) {
         e.preventDefault();

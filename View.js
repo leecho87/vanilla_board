@@ -29,8 +29,10 @@ View.prototype = {
                         </tbody>
                     </table>
                     <div class="buttonBox">
-                        <button type="button" id="write">작성</button>
-                        <button type="button" id="list">목록</button>
+                        <!--<button type="button" id="write">작성</button>
+                        <button type="button" id="list">목록</button>-->
+                        <a href="#submit">글등록</a>
+                        <a href="#list">목록보기</a>
                     </div>
                 </form>
                 </div>
@@ -73,7 +75,8 @@ View.prototype = {
                         <tbody id="ListRows">${item}</tbody>
                     </table>
                     <div class="buttonBox buttonBox--right">
-                        <button id="regist">작성</button>
+                        <!--<button id="regist">작성</button>-->
+                        <a href="/#write">작성하기</a>
                     </div>
                 </div>
             `
