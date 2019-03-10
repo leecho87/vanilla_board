@@ -1,25 +1,24 @@
 var Controller = function (model, view) {
     this.model = model;
     this.view = view;
-    this.init();
+    this.router();
     window.addEventListener('hashchange', this.router.bind(this))
 }
 Controller.prototype = {
-    init: function () {
-        // router만 있으면 init 지우고 router만 있어도 되지 않을려나?
-        this.router();
-    },
     router : function(){
-        if(!location.hash || location.hash === '#list'){
+        var hash = location.hash.replace('#','')
+
+        if(!hash || hash === 'list'){
             this.listHandler();
-        }else if(location.hash === '#write'){
+        }else if(hash === 'write'){
             this.writeHandler();
+        }else if(hash === 'detail'){
+            this.detailHandler();
         }
     },
     writeHandler: function () {
         this.view.writeRender();
-        // this.view.container.querySelector('#write').addEventListener('click', this.validator.bind(this));
-        // this.view.container.querySelector('#list').addEventListener('click', this.listHandler.bind(this));
+        this.view.container.querySelector('form').addEventListener('submit', this.validator.bind(this))
     },
     validator: function (e) {
         e.preventDefault();
@@ -32,17 +31,17 @@ Controller.prototype = {
         if (!name.value) {
             alert('이름을 입력해주세요.');
             name.focus();
-            return;
+            return false;
         }
         if (!title.value) {
             alert('제목을 입력해주세요.');
             title.focus();
-            return;
+            return false;
         }
         if (!contents.value) {
             alert('내용을 입력해주세요.');
             contents.focus();
-            return;
+            return false;
         }
 
         if (form.id === "WriteForm") {
@@ -65,31 +64,26 @@ Controller.prototype = {
         // 정보만들기
         this.model.createData(data);
         // 리스트 만드는 함수 호출
-        this.listHandler(this.model.data);
+        this.listHandler();
     },
     listHandler: function () {
         // 리스트만들기
         this.view.createItem(this.model.data);
-        // 이벤트부여
-        // var detailButton = this.view.container.querySelectorAll('a');
-        // var writeButton = this.view.container.querySelector('button');
-        // for (var i = 0; i < detailButton.length; i++) {
-        //     detailButton[i].addEventListener('click', this.detailHandler.bind(this));
-        // }
-        // writeButton.addEventListener('click', this.writeHandler.bind(this));
+        location.hash = '#list';
     },
     detailHandler: function (e) {
-        e.preventDefault();
+        console.log(location)
+        // e.preventDefault();
         // key값, 정보 넘기기
-        this.view.detailRender(e.target.dataset.key, this.model.data);
+        // this.view.detailRender(e.target.dataset.key, this.model.data);
 
         // 이벤트부여
-        var modifyButton = this.view.container.querySelector('#modify');
-        var listButton = this.view.container.querySelector('#cancel');
-        var deleteButton = this.view.container.querySelector('#delete');
-        modifyButton.addEventListener('click', this.modifyHandler.bind(this));
-        listButton.addEventListener('click', this.listHandler.bind(this));
-        deleteButton.addEventListener('click', this.deleteHandler.bind(this));
+        // var modifyButton = this.view.container.querySelector('#modify');
+        // var listButton = this.view.container.querySelector('#cancel');
+        // var deleteButton = this.view.container.querySelector('#delete');
+        // modifyButton.addEventListener('click', this.modifyHandler.bind(this));
+        // listButton.addEventListener('click', this.listHandler.bind(this));
+        // deleteButton.addEventListener('click', this.deleteHandler.bind(this));
     },
     modifyHandler: function (e) {
         e.preventDefault();

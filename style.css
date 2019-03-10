@@ -43,6 +43,7 @@ textarea {
 }
 button {
     box-sizing:border-box;
+    height:35px;
     padding:8px 15px;
     background:none;
     border:1px solid #000;
@@ -51,6 +52,7 @@ button {
 }
 .buttonBox {
     position:relative;
+    min-height:35px;
     padding:30px 0;
     text-align:center
 }
@@ -61,4 +63,16 @@ button {
     position:absolute;
     right:30px;
     top:30px;
+}
+
+.buttonBox a {
+    position:absolute;
+    top:30px;
+    right:30px;
+    padding:8px 20px;
+    background-color:gray;
+    color:#fff;
+    font-size:15px;
+    text-decoration:none;
+    font-weight:normal
 }

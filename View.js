@@ -5,7 +5,6 @@ var View = function (model) {
 View.prototype = {
     init: function () {
         this.container = document.querySelector('#app');
-        return this;
     },
     writeRender: function () {
         var template = function () {
@@ -29,9 +28,7 @@ View.prototype = {
                         </tbody>
                     </table>
                     <div class="buttonBox">
-                        <!--<button type="button" id="write">작성</button>
-                        <button type="button" id="list">목록</button>-->
-                        <a href="#submit">글등록</a>
+                        <button type="submit">글등록</button>
                         <a href="#list">목록보기</a>
                     </div>
                 </form>
@@ -45,8 +42,8 @@ View.prototype = {
         if (!(JSON.stringify(data) === '{}')) {
             for (var key in data) {
                 item += `<tr>`
-                item += `<td><a href="/" data-key="${key}">${data[key].title}</a></td>`
-                item += `<td><a href="/" data-key="${key}">${data[key].contents}</a></td>`
+                item += `<td><a href="#detail" data-key="${key}">${data[key].title}</a></td>`
+                item += `<td><a href="#detail" data-key="${key}">${data[key].contents}</a></td>`
                 item += `<td>${data[key].name}</td>`
                 item += `</tr>`
             }
@@ -76,7 +73,7 @@ View.prototype = {
                     </table>
                     <div class="buttonBox buttonBox--right">
                         <!--<button id="regist">작성</button>-->
-                        <a href="/#write">작성하기</a>
+                        <a href="#write">작성하기</a>
                     </div>
                 </div>
             `
