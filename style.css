@@ -47,8 +47,10 @@ button {
     padding:8px 15px;
     background:none;
     border:1px solid #000;
+    font-size:15px;
     cursor:pointer;
     font-family:'Malgun Gothic','Apple SD Gothic Neo';
+    vertical-align:top;
 }
 .buttonBox {
     position:relative;
@@ -59,16 +61,8 @@ button {
 .buttonBox--right {
     text-align:right
 }
-#delete {
-    position:absolute;
-    right:30px;
-    top:30px;
-}
-
 .buttonBox a {
-    position:absolute;
-    top:30px;
-    right:30px;
+    display:inline-block;
     padding:8px 20px;
     background-color:gray;
     color:#fff;

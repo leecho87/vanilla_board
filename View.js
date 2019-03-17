@@ -42,8 +42,8 @@ View.prototype = {
         if (!(JSON.stringify(data) === '{}')) {
             for (var key in data) {
                 item += `<tr>`
-                item += `<td><a href="#detail" data-key="${key}">${data[key].title}</a></td>`
-                item += `<td><a href="#detail" data-key="${key}">${data[key].contents}</a></td>`
+                item += `<td><a href="#detail?key=${key}" data-key="${key}">${data[key].title}</a></td>`
+                item += `<td><a href="#detail?key=${key}" data-key="${key}">${data[key].contents}</a></td>`
                 item += `<td>${data[key].name}</td>`
                 item += `</tr>`
             }
@@ -72,7 +72,6 @@ View.prototype = {
                         <tbody id="ListRows">${item}</tbody>
                     </table>
                     <div class="buttonBox buttonBox--right">
-                        <!--<button id="regist">작성</button>-->
                         <a href="#write">작성하기</a>
                     </div>
                 </div>
@@ -107,9 +106,9 @@ View.prototype = {
                         </tbody>
                     </table>
                     <div class="buttonBox">
-                        <button type="button" id="modify">수정</button>
-                        <button type="button" id="cancel">목록</button>
-                        <button type="button" id="delete">삭제</button>
+                        <a href="#modify?key=${key}">수정하기</a>
+                        <a href="#list">목록으로</a>
+                        <a href="#" id="delete">삭제하기</a>
                     </div>
                 </div>
             </form>

@@ -6,15 +6,21 @@ var Controller = function (model, view) {
 }
 Controller.prototype = {
     router : function(){
-        var hash = location.hash.replace('#','')
+        var regExpHash = /\#\w+/;
+        var hash = (location.hash.length <= 0) ? '' : regExpHash.exec(location.hash)[0].replace('#','');
+
 
         if(!hash || hash === 'list'){
             this.listHandler();
         }else if(hash === 'write'){
             this.writeHandler();
         }else if(hash === 'detail'){
-            this.detailHandler();
+            this.detailHandler(this.getKey());
         }
+    },
+    getKey : function(){
+        var key = location.hash.match(/\d+/);
+        return key;
     },
     writeHandler: function () {
         this.view.writeRender();
@@ -71,11 +77,11 @@ Controller.prototype = {
         this.view.createItem(this.model.data);
         location.hash = '#list';
     },
-    detailHandler: function (e) {
-        console.log(location)
+    detailHandler: function (key) {
         // e.preventDefault();
         // key값, 정보 넘기기
-        // this.view.detailRender(e.target.dataset.key, this.model.data);
+        // console.log(key)
+        this.view.detailRender(key, this.model.data);
 
         // 이벤트부여
         // var modifyButton = this.view.container.querySelector('#modify');
