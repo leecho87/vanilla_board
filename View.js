@@ -139,8 +139,8 @@ View.prototype = {
                     </tbody>
                 </table>
                 <div class="buttonBox">
-                    <button type="button" id="update">업데이트</button>
-                    <button type="button" id="cancel">취소</button>
+                    <a href="#list" id="update">수정완료</a>
+                    <a href="#detail?key=${key}">취소</a>
                 </div>
             </form>
             </div>

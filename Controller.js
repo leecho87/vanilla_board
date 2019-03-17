@@ -7,16 +7,39 @@ var Controller = function (model, view) {
 Controller.prototype = {
     router : function(){
         var regExpHash = /\#\w+/;
+        var regExpKey = /\d+/
         var hash = (location.hash.length <= 0) ? '' : regExpHash.exec(location.hash)[0].replace('#','');
+        var key = (!location.hash.match(/\?key/)) ? '' : regExpKey.exec(location.hash)[0]
 
-
-        if(!hash || hash === 'list'){
-            this.listHandler();
-        }else if(hash === 'write'){
-            this.writeHandler();
-        }else if(hash === 'detail'){
-            this.detailHandler(this.getKey());
+        switch(hash){
+            case '' :
+                this.listHandler();
+                break;
+            case 'list' :
+                this.listHandler();
+                break;
+            case 'write' :
+                this.writeHandler();
+                break;
+            case 'detail' :
+                this.detailHandler(key);
+                break;
+            case 'modify' :
+                this.modifyHandler(key);
+                break;
+            default :
+                alert('페이지가 올바르지 않습니다.');
+                this.listHandler();
         }
+        // if(!hash || hash === 'list'){
+        //     this.listHandler();
+        // }else if(hash === 'write'){
+        //     this.writeHandler();
+        // }else if(hash === 'detail'){
+        //     this.detailHandler(key);
+        // }else if(hash === 'modify'){
+        //     this.modifyHandler(key)
+        // }
     },
     getKey : function(){
         var key = location.hash.match(/\d+/);
@@ -78,28 +101,12 @@ Controller.prototype = {
         location.hash = '#list';
     },
     detailHandler: function (key) {
-        // e.preventDefault();
-        // key값, 정보 넘기기
-        // console.log(key)
         this.view.detailRender(key, this.model.data);
-
-        // 이벤트부여
-        // var modifyButton = this.view.container.querySelector('#modify');
-        // var listButton = this.view.container.querySelector('#cancel');
-        // var deleteButton = this.view.container.querySelector('#delete');
-        // modifyButton.addEventListener('click', this.modifyHandler.bind(this));
-        // listButton.addEventListener('click', this.listHandler.bind(this));
-        // deleteButton.addEventListener('click', this.deleteHandler.bind(this));
+        this.view.container.querySelector('#delete').addEventListener('click', this.deleteHandler.bind(this));
     },
-    modifyHandler: function (e) {
-        e.preventDefault();
-        var useKey = this.view.container.querySelector('[name=dataKey]').value;
-        var useData = this.model.data[useKey];
-        this.view.modifyRender(useKey, useData);
-        var updateButton = this.view.container.querySelector('#update');
-        var listButton = this.view.container.querySelector('#cancel');
-        updateButton.addEventListener('click', this.validator.bind(this));
-        listButton.addEventListener('click', this.listHandler.bind(this));
+    modifyHandler: function (key) {
+        this.view.modifyRender(key, this.model.data[key]);
+        this.view.container.querySelector('#update').addEventListener('click', this.validator.bind(this));
     },
     updateHandler: function (key, data) {
         this.model.updateData(key, data)
