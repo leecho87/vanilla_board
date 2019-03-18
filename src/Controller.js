@@ -7,7 +7,7 @@ var Controller = function (model, view) {
 Controller.prototype = {
     router : function(){
         var regExpHash = /\#\w+/;
-        var regExpKey = /\d+/
+        var regExpKey = /\d+/;
         var hash = (location.hash.length <= 0) ? '' : regExpHash.exec(location.hash)[0].replace('#','');
         var key = (!location.hash.match(/\?key/)) ? '' : regExpKey.exec(location.hash)[0]
 
